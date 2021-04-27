@@ -67,6 +67,10 @@ def start(Dic):
     while code2 ==0:
       r2=session.post(url2,headers=header,data=Payload)
       rdic2=json.loads(r2.text)
+      try:
+        code2=rdic2['code']
+      except KeyError:
+        code2=rdic2['statusCode']
     else:
       if code2==400:
         result=Result("Success!",rdic2['message'])
