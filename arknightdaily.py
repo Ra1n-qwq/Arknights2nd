@@ -7,8 +7,13 @@
 '''
 # here put the import lib
 import json
+import logging
 import requests
 import time
+logging.basicConfig(
+  level = logging.INFO,
+  format = '%(asctime)s %(levelname)s %(message)s',
+  datefmt = '%Y-%m-%dT%H:%M:%S')
 def  Result(result, data):
   return json.dumps(
     {
@@ -53,13 +58,13 @@ def start(Dic):
     except KeyError:
       code2=rdic2['statusCode']
     if code ==True:
-        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"     分享成功！")
+        logging.info (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"     分享成功！")
     elif code ==False:
-        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"     今天已经分享过了")
+        logging.info (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"     今天已经分享过了")
     else:
       err_result=Result("Error!",rdic)
-      print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-      print(err_result)
+      logging.info(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+      logging.info(err_result)
     while code2 ==0:
       r2=session.post(url2,headers=header,data=Payload)
       rdic2=json.loads(r2.text)
@@ -67,10 +72,10 @@ def start(Dic):
     else:
       if code2==400:
         result=Result("Success!",rdic2)
-        print(result)
+        logging.info(result)
       else:
         result=Result("Error!",rdic2)
-        print(result)
+        logging.info(result)
     time.sleep(5)
 if __name__ == "__main__":
   #只有一个账号时
