@@ -58,20 +58,18 @@ def start(Dic):
     except KeyError:
       code2=rdic2['statusCode']
     if code ==True:
-        logging.info (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"     分享成功！")
+        logging.info ("分享成功！")
     elif code ==False:
-        logging.info (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"     今天已经分享过了")
+        logging.info ("今天已经分享过了")
     else:
       err_result=Result("Error!",rdic)
-      logging.info(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
       logging.info(err_result)
     while code2 ==0:
       r2=session.post(url2,headers=header,data=Payload)
       rdic2=json.loads(r2.text)
-      result=Result("Success!",rdic2)
     else:
       if code2==400:
-        result=Result("Success!",rdic2)
+        result=Result("Success!",rdic2['message'])
         logging.info(result)
       else:
         result=Result("Error!",rdic2)
